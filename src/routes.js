@@ -1,88 +1,60 @@
 // import
-import React, { Component }  from 'react';
+import React  from 'react';
 import Dashboard from "views/Dashboard/Dashboard.js";
 import Tables from "views/Dashboard/Tables.js";
 import Billing from "views/Dashboard/Billing.js";
-import RTLPage from "views/RTL/RTLPage.js";
 import Profile from "views/Dashboard/Profile.js";
-import SignIn from "views/Pages/SignIn.js";
-import SignUp from "views/Pages/SignUp.js";
 
 import {
-  HomeIcon,
   StatsIcon,
   CreditIcon,
   PersonIcon,
-  DocumentIcon,
-  RocketIcon,
-  SupportIcon,
 } from "components/Icons/Icons";
+import { Icon } from "@chakra-ui/react" 
+import { FaCarAlt, FaRegMap, FaCog } from 'react-icons/fa'
 
-var dashRoutes = [
+const dashRoutes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    rtlName: "لوحة القيادة",
-    icon: <HomeIcon color='inherit' />,
+    path: "/mapa",
+    name: "Mapa",
+    icon: <Icon as={FaRegMap} color='inherit' />,
     component: Dashboard,
     layout: "/admin",
   },
   {
-    path: "/tables",
-    name: "Tables",
-    rtlName: "لوحة القيادة",
+    path: "/entregas",
+    name: "Entregas",
     icon: <StatsIcon color='inherit' />,
     component: Tables,
     layout: "/admin",
   },
   {
-    path: "/billing",
-    name: "Billing",
-    rtlName: "لوحة القيادة",
+    path: "/entregadores",
+    name: "Entregadores",
+    icon: <Icon as={FaCarAlt} color='inherit' />,
+    component: Tables,
+    layout: "/admin",
+  },
+  {
+    path: "/pagamentos",
+    name: "Pagamentos",
     icon: <CreditIcon color='inherit' />,
     component: Billing,
     layout: "/admin",
   },
   {
-    path: "/rtl-support-page",
-    name: "RTL",
-    rtlName: "آرتيإل",
-    icon: <SupportIcon color='inherit' />,
-    component: RTLPage,
-    layout: "/rtl",
+    path: "/perfil",
+    name: "Perfil",
+    icon: <PersonIcon color='inherit' />,
+    component: Profile,
+    layout: "/admin",
   },
   {
-    name: "ACCOUNT PAGES",
-    category: "account",
-    rtlName: "صفحات",
-    state: "pageCollapse",
-    views: [
-      {
-        path: "/profile",
-        name: "Profile",
-        rtlName: "لوحة القيادة",
-        icon: <PersonIcon color='inherit' />,
-        secondaryNavbar: true,
-        component: Profile,
-        layout: "/admin",
-      },
-      {
-        path: "/signin",
-        name: "Sign In",
-        rtlName: "لوحة القيادة",
-        icon: <DocumentIcon color='inherit' />,
-        component: SignIn,
-        layout: "/auth",
-      },
-      {
-        path: "/signup",
-        name: "Sign Up",
-        rtlName: "لوحة القيادة",
-        icon: <RocketIcon color='inherit' />,
-        component: SignUp,
-        layout: "/auth",
-      },
-    ],
+    path: "/configuracoes",
+    name: "Configurações",
+    icon: <Icon as={FaCog} color='inherit' />,
+    component: Profile,
+    layout: "/admin",
   },
 ];
 export default dashRoutes;

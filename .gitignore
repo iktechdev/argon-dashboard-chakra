@@ -1,3 +1,10 @@
 node_modules
 package-lock.json
 build
+
+/node_modules
+/.pnp
+.pnp.js
+/.yarn
+/.yarn/*
+.yarn

@@ -26,7 +26,6 @@ import {
   renderViewRTL
 } from "components/Scrollbar/Scrollbar";
 import { HSeparator } from "components/Separator/Separator";
-import { SidebarHelp } from "components/Sidebar/SidebarHelp";
 import React from "react";
 import { Scrollbars } from "react-custom-scrollbars";
 import { NavLink, useLocation } from "react-router-dom";
@@ -236,26 +235,17 @@ function Sidebar(props) {
         >
           <Scrollbars
             autoHide
-            renderTrackVertical={
-              document.documentElement.dir === "rtl"
-                ? renderTrackRTL
-                : renderTrack
-            }
+            renderTrackVertical={renderTrack}
             renderThumbVertical={useColorModeValue(
               renderThumbLight,
               renderThumbDark
             )}
-            renderView={
-              document.documentElement.dir === "rtl"
-                ? renderViewRTL
-                : renderView
-            }
+            renderView={renderView}
           >
             <Box>{brand}</Box>
             <Stack direction="column" mb="40px">
               <Box>{links}</Box>
             </Stack>
-            <SidebarHelp sidebarVariant={sidebarVariant} />
           </Scrollbars>
         </Box>
       </Box>
@@ -460,7 +450,7 @@ export function SidebarResponsive(props) {
       <Drawer
         isOpen={isOpen}
         onClose={onClose}
-        placement={document.documentElement.dir === "rtl" ? "right" : "left"}
+        placement={"left"}
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
@@ -481,12 +471,11 @@ export function SidebarResponsive(props) {
             _hover={{ boxShadow: "none" }}
           />
           <DrawerBody maxW="250px" px="1rem">
-            <Box maxW="100%" h="100vh">
+            <Box maxW="100%" h="calc(100vh - 50px)">
               <Box>{brand}</Box>
               <Stack direction="column" mb="40px">
                 <Box>{links}</Box>
               </Stack>
-              <SidebarHelp />
             </Box>
           </DrawerBody>
         </DrawerContent>
