@@ -14,16 +14,14 @@ import {
   Text,
   useColorMode,
   useColorModeValue,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import IconBox from "components/Icons/IconBox";
 import {
   renderThumbDark,
   renderThumbLight,
   renderTrack,
-  renderTrackRTL,
   renderView,
-  renderViewRTL
 } from "components/Scrollbar/Scrollbar";
 import { HSeparator } from "components/Separator/Separator";
 import React from "react";
@@ -34,7 +32,7 @@ import { NavLink, useLocation } from "react-router-dom";
 
 // FUNCTIONS
 
-function Sidebar(props) {
+function Sidebar ( props ) {
   // to check for active links and opened collapses
   let location = useLocation();
   // this is for the rest of the collapses
@@ -76,10 +74,9 @@ function Sidebar(props) {
                 xl: "16px",
               }}
               py="12px"
+              display={sidebarOpen ? "block": "none"}
             >
-              {document.documentElement.dir === "rtl"
-                ? prop.rtlName
-                : prop.name}
+              {prop.name}
             </Text>
             {createLinks(prop.views)}
           </>
@@ -118,7 +115,7 @@ function Sidebar(props) {
                 boxShadow: "0px 7px 11px rgba(0, 0, 0, 0.04)",
               }}
             >
-              <Flex>
+              <Flex justifyContent={sidebarOpen ? "start": "center"}>
                 {typeof prop.icon === "string" ? (
                   <Icon>{prop.icon}</Icon>
                 ) : (
@@ -127,16 +124,14 @@ function Sidebar(props) {
                     color="white"
                     h="30px"
                     w="30px"
-                    me="12px"
+                    me={sidebarOpen ? "12px": 0}
                     transition={variantChange}
                   >
                     {prop.icon}
                   </IconBox>
                 )}
-                <Text color={activeColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                <Text display={sidebarOpen ? "block": "none"} color={activeColor} my="auto" fontSize="sm">
+                  {prop.name}
                 </Text>
               </Flex>
             </Button>
@@ -169,7 +164,7 @@ function Sidebar(props) {
                 boxShadow: "none",
               }}
             >
-              <Flex>
+              <Flex justifyContent={sidebarOpen ? "start": "center"}>
                 {typeof prop.icon === "string" ? (
                   <Icon>{prop.icon}</Icon>
                 ) : (
@@ -178,16 +173,14 @@ function Sidebar(props) {
                     color="blue.500"
                     h="30px"
                     w="30px"
-                    me="12px"
+                    me={sidebarOpen ? "12px": 0}
                     transition={variantChange}
                   >
                     {prop.icon}
                   </IconBox>
                 )}
-                <Text color={inactiveColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                <Text display={sidebarOpen ? "block": "none"} color={inactiveColor} my="auto" fontSize="sm">
+                  {prop.name}
                 </Text>
               </Flex>
             </Button>
@@ -196,8 +189,7 @@ function Sidebar(props) {
       );
     });
   };
-  const { logo, routes } = props;
-
+  const { logo, routes, sidebarOpen, setSidebarOpen } = props;
   var links = <>{createLinks(routes)}</>;
   //  BRAND
   //  Chakra Color Mode
@@ -206,19 +198,44 @@ function Sidebar(props) {
   let sidebarMargins = "0px";
   var brand = (
     <Box pt={"25px"} mb="12px">
-      {logo}
+      {sidebarOpen ?
+        logo : 
+        <Flex justifyContent="center">
+          <Text>IK</Text>
+        </Flex>
+      }
       <HSeparator my="26px" />
     </Box>
   );
 
+  const [mouseEventFlag, setMouseEventFlag] = React.useState(false)
+
+  const mouseEventHandler = {
+    onEnter: () => {
+      if ( !sidebarOpen ) {
+        setSidebarOpen( true )
+        setMouseEventFlag(true)
+      }
+    },
+    onLeave: () => {
+      if ( mouseEventFlag ) {
+        setSidebarOpen( false )
+        setMouseEventFlag(false)
+      }
+    }
+  }
   // SIDEBAR
   return (
-    <Box ref={mainPanel}>
-      <Box display={{ sm: "none", xl: "block" }} position="fixed">
+    <Box
+      ref={mainPanel}
+      onMouseEnter={mouseEventHandler.onEnter}
+      onMouseLeave={mouseEventHandler.onLeave}
+    >
+      <Box display={{ sm: "none", md: "flex" }} position="fixed">
         <Box
           bg={sidebarBg}
           transition={variantChange}
-          w="260px"
+          w={sidebarOpen ? "260px" : "120px"}
           maxW="260px"
           ms={{
             sm: "16px",
@@ -243,8 +260,8 @@ function Sidebar(props) {
             renderView={renderView}
           >
             <Box>{brand}</Box>
-            <Stack direction="column" mb="40px">
-              <Box>{links}</Box>
+            <Stack direction="column" mb="40px" >
+              <Stack alignItems={sidebarOpen ? "start": "center"} >{links}</Stack>
             </Stack>
           </Scrollbars>
         </Box>
@@ -256,6 +273,7 @@ function Sidebar(props) {
 // FUNCTIONS
 
 export function SidebarResponsive(props) {
+  
   // to check for active links and opened collapses
   let location = useLocation();
   const { logo, routes, colorMode, hamburgerColor, ...rest } = props;
@@ -436,7 +454,7 @@ export function SidebarResponsive(props) {
   // Color variables
   return (
     <Flex
-      display={{ sm: "flex", xl: "none" }}
+      display={{ sm: "flex", md: "none" }}
       ref={mainPanel}
       alignItems="center"
     >

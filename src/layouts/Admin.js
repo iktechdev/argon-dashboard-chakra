@@ -31,7 +31,8 @@ import bgAdmin from "assets/img/admin-background.png";
 export default function Dashboard(props) {
   const { ...rest } = props;
   // states and functions
-  const [fixed, setFixed] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [ fixed, setFixed ] = useState( false );
   const { colorMode } = useColorMode();
   // functions for changing the states from components
   const getRoute = () => {
@@ -138,12 +139,14 @@ export default function Dashboard(props) {
           </Stack>
         }
         display='none'
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
         {...rest}
       />
       <MainPanel
         w={{
           base: "100%",
-          xl: "calc(100% - 275px)",
+          md: sidebarOpen ? "calc(100% - 275px)" : "calc(100% - 120px)",
         }}>
         <Portal>
           <AdminNavbar
@@ -151,6 +154,8 @@ export default function Dashboard(props) {
             brandText={getActiveRoute(routes)}
             secondary={getActiveNavbar(routes)}
             fixed={fixed}
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
             {...rest}
           />
         </Portal>

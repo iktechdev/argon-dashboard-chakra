@@ -1,4 +1,5 @@
 // Chakra Imports
+import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Breadcrumb,
@@ -29,6 +30,8 @@ export default function AdminNavbar(props) {
     secondary,
     brandText,
     onOpen,
+    sidebarOpen,
+    setSidebarOpen,
     ...rest
   } = props;
 
@@ -99,8 +102,7 @@ export default function AdminNavbar(props) {
       mx="auto"
       mt={secondaryMargin}
       pb="8px"
-      left={document.documentElement.dir === "rtl" ? "30px" : ""}
-      right={document.documentElement.dir === "rtl" ? "" : "30px"}
+      right={"30px"}
       px={{
         sm: paddingX,
         md: "30px",
@@ -110,7 +112,10 @@ export default function AdminNavbar(props) {
       }}
       pt="8px"
       top="18px"
-      w={{ sm: "calc(100vw - 30px)", xl: "calc(100vw - 75px - 275px)" }}
+      w={{
+        sm: "calc(100vw - 30px)",
+        md: sidebarOpen ? "calc(100vw - 75px - 275px)" : "calc(100vw - 75px - 130px)"
+      }}
     >
       <Flex
         w="100%"
@@ -120,40 +125,51 @@ export default function AdminNavbar(props) {
         }}
         alignItems={{ xl: "center" }}
       >
-        <Box mb={{ sm: "8px", md: "0px" }}>
-          <Breadcrumb>
-            <BreadcrumbItem color={mainText}>
-              <BreadcrumbLink href="#" color={secondaryText}>
-                Pages
-              </BreadcrumbLink>
-            </BreadcrumbItem>
+        <Flex alignItems="center" gap={7}>
+          <Box mb={{ sm: "8px", md: "0px" }}>
+            <Breadcrumb>
+              <BreadcrumbItem color={mainText}>
+                <BreadcrumbLink href="#" color={secondaryText}>
+                  Pages
+                </BreadcrumbLink>
+              </BreadcrumbItem>
 
-            <BreadcrumbItem color={mainText}>
-              <BreadcrumbLink href="#" color={mainText}>
-                {brandText}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          </Breadcrumb>
-          {/* Here we create navbar brand, based on route name */}
-          <Link
-            color={mainText}
-            href="#"
-            bg="inherit"
-            borderRadius="inherit"
-            fontWeight="bold"
-            _hover={{ color: { mainText } }}
-            _active={{
-              bg: "inherit",
-              transform: "none",
-              borderColor: "transparent",
-            }}
-            _focus={{
-              boxShadow: "none",
-            }}
-          >
-            {brandText}
-          </Link>
-        </Box>
+              <BreadcrumbItem color={mainText}>
+                <BreadcrumbLink href="#" color={mainText}>
+                  {brandText}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </Breadcrumb>
+            {/* Here we create navbar brand, based on route name */}
+            <Link
+              color={mainText}
+              href="#"
+              bg="inherit"
+              borderRadius="inherit"
+              fontWeight="bold"
+              _hover={{ color: { mainText } }}
+              _active={{
+                bg: "inherit",
+                transform: "none",
+                borderColor: "transparent",
+              }}
+              _focus={{
+                boxShadow: "none",
+              }}
+            >
+              {brandText}
+            </Link>
+          </Box>
+
+          <HamburgerIcon
+            color='white'
+            w="18px"
+            h="18px"
+            onClick={() => {setSidebarOpen(!sidebarOpen)}}
+            display={{ base: 'none', md: 'block' }}
+            cursor="pointer"
+          />
+        </Flex>
         <Box ms="auto" w={{ sm: "100%", md: "unset" }}>
           <AdminNavbarLinks
             onOpen={props.onOpen}
