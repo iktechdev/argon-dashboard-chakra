@@ -15,6 +15,7 @@ import {
   useColorMode,
   useColorModeValue,
   useDisclosure,
+  Link
 } from "@chakra-ui/react";
 import IconBox from "components/Icons/IconBox";
 import {
@@ -48,11 +49,11 @@ function Sidebar ( props ) {
   const { sidebarVariant } = props;
   const createLinks = (routes) => {
     // Chakra Color Mode
-    let activeBg = useColorModeValue("white", "navy.700");
-    let inactiveBg = useColorModeValue("white", "navy.700");
-    let activeColor = useColorModeValue("gray.700", "white");
-    let inactiveColor = useColorModeValue("gray.400", "gray.400");
-    let sidebarActiveShadow = "0px 7px 11px rgba(0, 0, 0, 0.04)";
+    const activeBg = useColorModeValue("white", "navy.700");
+    const inactiveBg = useColorModeValue("white", "navy.700");
+    const activeColor = useColorModeValue("gray.700", "white");
+    const inactiveColor = useColorModeValue("gray.400", "gray.400");
+    const sidebarActiveShadow = "0px 7px 11px rgba(0, 0, 0, 0.04)";
     return routes.map((prop, key) => {
       if (prop.redirect) {
         return null;
@@ -83,7 +84,7 @@ function Sidebar ( props ) {
         );
       }
       return (
-        <NavLink to={prop.layout + prop.path} key={key}>
+        <Link href={prop.layout + prop.path} key={key} w={sidebarOpen ? '100%' : 'auto'}>
           {activeRoute(prop.layout + prop.path) === "active" ? (
             <Button
               boxSize="initial"
@@ -104,7 +105,7 @@ function Sidebar ( props ) {
               }}
               py="12px"
               borderRadius="15px"
-              _hover="none"
+              _hover="none" 
               w="100%"
               _active={{
                 bg: "inherit",
@@ -185,7 +186,7 @@ function Sidebar ( props ) {
               </Flex>
             </Button>
           )}
-        </NavLink>
+        </Link>
       );
     });
   };
@@ -231,7 +232,7 @@ function Sidebar ( props ) {
       onMouseEnter={mouseEventHandler.onEnter}
       onMouseLeave={mouseEventHandler.onLeave}
     >
-      <Box display={{ sm: "none", md: "flex" }} position="fixed">
+      <Box display={{ sm: "none", lg: "flex" }} position="fixed">
         <Box
           bg={sidebarBg}
           transition={variantChange}
@@ -286,15 +287,15 @@ export function SidebarResponsive(props) {
     return location.pathname === routeName ? "active" : "";
   };
   // Chakra Color Mode
-  let activeBg = useColorModeValue("white", "navy.700");
-  let inactiveBg = useColorModeValue("white", "navy.700");
-  let activeColor = useColorModeValue("gray.700", "white");
-  let inactiveColor = useColorModeValue("gray.400", "white");
-  let sidebarActiveShadow = useColorModeValue(
+  const activeBg = useColorModeValue("white", "navy.700");
+  const inactiveBg = useColorModeValue("white", "navy.700");
+  const activeColor = useColorModeValue("gray.700", "white");
+  const inactiveColor = useColorModeValue("gray.400", "white");
+  const sidebarActiveShadow = useColorModeValue(
     "0px 7px 11px rgba(0, 0, 0, 0.04)",
     "none"
   );
-  let sidebarBackgroundColor = useColorModeValue("white", "navy.800");
+  const sidebarBackgroundColor = useColorModeValue("white", "navy.800");
 
   // this function creates the links and collapses that appear in the sidebar (left menu)
   const createLinks = (routes) => {
@@ -320,9 +321,7 @@ export function SidebarResponsive(props) {
               }}
               py="12px"
             >
-              {document.documentElement.dir === "rtl"
-                ? prop.rtlName
-                : prop.name}
+              {prop.name}
             </Text>
             {createLinks(prop.views)}
           </>
@@ -375,9 +374,7 @@ export function SidebarResponsive(props) {
                   </IconBox>
                 )}
                 <Text color={activeColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                  {prop.name}
                 </Text>
               </Flex>
             </Button>
@@ -425,9 +422,7 @@ export function SidebarResponsive(props) {
                   </IconBox>
                 )}
                 <Text color={inactiveColor} my="auto" fontSize="sm">
-                  {document.documentElement.dir === "rtl"
-                    ? prop.rtlName
-                    : prop.name}
+                  {prop.name}
                 </Text>
               </Flex>
             </Button>
@@ -454,7 +449,7 @@ export function SidebarResponsive(props) {
   // Color variables
   return (
     <Flex
-      display={{ sm: "flex", md: "none" }}
+      display={{ sm: "flex", lg: "none" }}
       ref={mainPanel}
       alignItems="center"
     >

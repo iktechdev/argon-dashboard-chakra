@@ -6,7 +6,6 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Flex,
-  Link,
   useColorModeValue
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
@@ -114,7 +113,7 @@ export default function AdminNavbar(props) {
       top="18px"
       w={{
         sm: "calc(100vw - 30px)",
-        md: sidebarOpen ? "calc(100vw - 75px - 275px)" : "calc(100vw - 75px - 130px)"
+        lg: sidebarOpen ? "calc(100vw - 75px - 275px)" : "calc(100vw - 75px - 130px)"
       }}
     >
       <Flex
@@ -135,30 +134,11 @@ export default function AdminNavbar(props) {
               </BreadcrumbItem>
 
               <BreadcrumbItem color={mainText}>
-                <BreadcrumbLink href="#" color={mainText}>
+                <BreadcrumbLink href="#" color={mainText} fontWeight="bold">
                   {brandText}
                 </BreadcrumbLink>
               </BreadcrumbItem>
             </Breadcrumb>
-            {/* Here we create navbar brand, based on route name */}
-            <Link
-              color={mainText}
-              href="#"
-              bg="inherit"
-              borderRadius="inherit"
-              fontWeight="bold"
-              _hover={{ color: { mainText } }}
-              _active={{
-                bg: "inherit",
-                transform: "none",
-                borderColor: "transparent",
-              }}
-              _focus={{
-                boxShadow: "none",
-              }}
-            >
-              {brandText}
-            </Link>
           </Box>
 
           <HamburgerIcon
@@ -166,7 +146,7 @@ export default function AdminNavbar(props) {
             w="18px"
             h="18px"
             onClick={() => {setSidebarOpen(!sidebarOpen)}}
-            display={{ base: 'none', md: 'block' }}
+            display={{ base: 'none', lg: 'block' }}
             cursor="pointer"
           />
         </Flex>

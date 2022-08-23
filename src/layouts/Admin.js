@@ -146,7 +146,7 @@ export default function Dashboard(props) {
       <MainPanel
         w={{
           base: "100%",
-          md: sidebarOpen ? "calc(100% - 275px)" : "calc(100% - 120px)",
+          lg: sidebarOpen ? "calc(100% - 275px)" : "calc(100% - 120px)",
         }}>
         <Portal>
           <AdminNavbar
